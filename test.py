@@ -40,8 +40,16 @@ class TestPreferencesValue(unittest.TestCase):
                                 value=13)
 
     def test_set_value(self):
-        
         self.assertEqual(self.pref.value, 13)
 
+class TestPreferencesValue2(unittest.TestCase):
+    def setUp(self):
+        self.pref = Preferences(name="nam", 
+                                param_type=int, 
+                                default=13)
+
+    def test_set_value(self):
+        self.assertEqual(self.pref.value, 13)
+        
 if __name__ == '__main__':
     unittest.main()

@@ -23,7 +23,7 @@ class PluginBase(object):
         if config is None:
             self.preferences = [Preferences(name="enabled", 
                                             param_type=bool, 
-                                            value = True)]
+                                            default = True)]
         else:
             pass
     

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import json
 
 class Core(object):
@@ -5,6 +7,7 @@ class Core(object):
     
     def __init__(self):
         self.preferences = {}
+        self.project = None
         
     def save_options(self):       
         with open(self.preferences_file, 'w') as fp:
@@ -19,4 +22,3 @@ class Core(object):
                 self.preferences = json.load(fp)["preferences"]
         except IOError:
             pass
-    

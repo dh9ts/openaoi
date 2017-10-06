@@ -11,10 +11,56 @@ import os
 
 from core import Core
 from plugins.plugin import PluginBase, Preferences
+from project import Project
 
+class Util(object):
+    @staticmethod
+    def remove(file):
+        try:
+            os.remove(file)
+        except:
+            pass
 
+class TestProject(unittest.TestCase):
+    
+    project_file = "test_project.aoi"
+    
+    def setUp(self):
+        Util.remove(self.project_file)
+               
+    def tearDown(self):
+        Util.remove(self.project_file)
+    
+    
+    def test_save(self):
+        project = self.getProject()
+        project.save()
+        
+    def test_save_name(self):
+        project = self.getProject()
+        project.save(self.project_file)
+        
+        self.assertTrue(os.path.exists(self.project_file))
+        
+    def test_loading(self):
+        project = self.getProject()
+        project.name = "test"
+        project.save(self.project_file)
+        
+        project2 = Project.load(self.project_file)
+        self.assertEqual(project2.name, project.name)
+        
+    def getProject(self):
+        project = Project()
+        project.name = "test"
+        project.file = self.project_file
+        
+        return project
+    
+    
 class TestPlugin(unittest.TestCase):
     pass
+
 
 class TestCorePreferences(unittest.TestCase):
     def setUp(self):
@@ -22,10 +68,7 @@ class TestCorePreferences(unittest.TestCase):
         self.core.preferences_file = "test.json"
         
     def tearDown(self):
-        try:
-            os.remove("test.json")
-        except:
-            pass
+        Util.remove("test.json")
                
     def test_empty_class(self):
         self.assertIsNotNone(self.core.preferences)

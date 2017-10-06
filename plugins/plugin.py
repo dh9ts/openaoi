@@ -16,14 +16,15 @@ class PluginBase(object):
         Inits a new instance of the plugins.
         If config is given, the values are loaded. Otherwise default parameters.
         """
+        self.name = "PluginBase"
         self.status = self.STATUS_OK
         self.id = self.global_id
         self.global_id += 1
         
         if config is None:
-            self.preferences = [Preferences(name="enabled", 
-                                            param_type=bool, 
-                                            default = True)]
+            self.preferences = {"enabled": Preferences(name="enabled",
+                                                       param_type=bool,
+                                                       default = True)}
         else:
             pass
     
@@ -50,7 +51,6 @@ class Preferences(object):
     Class for Plugin-Preferences.
     
     Contains:
-        id: Unqiue ID for all Objects.
         name: Name of Parameter.
         type: Type of parameter (int, str, float, bool).
         default: Default Value if not set.

@@ -31,7 +31,6 @@ class TestProject(unittest.TestCase):
     def tearDown(self):
         Util.remove(self.project_file)
     
-    
     def test_save(self):
         project = self.getProject()
         project.save()

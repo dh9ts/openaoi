@@ -2,12 +2,15 @@
 
 import json
 
+from project import Project
+
+
 class Core(object):
     preferences_file = "options.json"
     
     def __init__(self):
         self.preferences = {}
-        self.project = None
+        self.project = Project()
         
     def save_options(self):       
         with open(self.preferences_file, 'w') as fp:

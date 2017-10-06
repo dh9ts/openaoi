@@ -2,7 +2,9 @@
 import jsonpickle
 
 class Project(object):
-    """ Base class for a project."""
+    """ 
+    Base class for a project.
+    """
     def __init__(self):
         self.steps = []
         self.name = "untitled"
@@ -13,6 +15,10 @@ class Project(object):
                                        indent=4)
     
     def save(self, filename=None):
+        """ 
+        Stores the project to disk. If filename is given, the project
+        is stored to this file. If not the internally stored one is used. 
+        """
         if filename is not None:
             self.file = filename
          
@@ -23,5 +29,9 @@ class Project(object):
      
     @staticmethod
     def load(filename):
+        """ 
+        Loads a project form file.
+        """
         with open(filename, 'r') as fp:
             return jsonpickle.decode(fp.read())
+    

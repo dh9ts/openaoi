@@ -25,3 +25,36 @@ class Core(object):
                 self.preferences = json.load(fp)["preferences"]
         except IOError:
             pass
+        
+    def getConfigValue(self, name, default=None):
+        value = self.preferences.get(name, default)
+        
+        names = name.split(".")
+        stage = self.preferences
+        
+        for index, name in enumerate(names):
+            if index == len(names) - 1:
+                value = stage.get(name, default)
+                
+            stage = stage.get(name, {})
+        
+        return value
+    
+    def setConfigValue(self, name, value):
+        names = name.split(".")
+        stage = self.preferences
+        
+        for index, name in enumerate(names):
+            if index == len(names) - 1:
+                stage[name] = value
+
+            if name not in stage.keys():
+                stage[name] = {}
+            
+            stage = stage[name]
+            
+    def _dump_options(self):
+        return json.dumps({"preferences": self.preferences}, 
+                          indent=4, 
+                          separators=(',', ': '))
+        

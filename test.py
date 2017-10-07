@@ -94,6 +94,51 @@ class TestCorePreferences(unittest.TestCase):
         
         self.assertIsNotNone(self.core.preferences)
         
+    def test_get_existing_value(self):
+        self.core.preferences["test"] = 42
+        
+        value = self.core.getConfigValue("test", 42)
+        
+        self.assertEqual(value, 42)
+        
+    def test_get_not_existing_value(self):        
+        value = self.core.getConfigValue("test", 0)
+        
+        self.assertEqual(value, 0)
+        
+    def test_set_value(self):
+        self.core.setConfigValue("test", 42)
+        
+        value = self.core.getConfigValue("test", 0)
+        
+        self.assertEqual(value, 42)
+        
+        self.core.save_options()
+        
+    def test_set_hierachic_value(self):
+        self.core.setConfigValue("test.stage2", 42)
+        
+        value = self.core.getConfigValue("test.stage2", 0)
+        
+        self.assertEqual(value, 42)
+        
+    def test_set_hierachic_value2(self):
+        self.core.setConfigValue("test.stage2.stage3.value", 42)
+        
+        value = self.core.getConfigValue("test.stage2.stage3.value", 0)
+        
+        self.assertEqual(value, 42)
+        
+    def test_set_two_hierachic_values(self):
+        self.core.setConfigValue("test.stage2.stage3.value", 42)
+        self.core.setConfigValue("test.stage2.val", 43)
+        
+        value1 = self.core.getConfigValue("test.stage2.stage3.value", 0)
+        value2 = self.core.getConfigValue("test.stage2.val", 0)
+        
+        self.assertEqual(value1, 42)
+        self.assertEqual(value2, 43)
+        
         
 class TestPreferences(unittest.TestCase):
     def setUp(self):

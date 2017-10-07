@@ -15,15 +15,35 @@ class OpenAoiRoot(BoxLayout):
     """
     def __init__(self, **kwargs):
         super(OpenAoiRoot, self).__init__(**kwargs)
+        # List of previous screens.
+        self.screen_list = []
         
     def change_screen(self, next_screen):
+        # If screen is not already in list, add it for "back-button" function.
+        if self.ids.kivy_screen_manager.current not in self.screen_list:
+            self.screen_list.append(self.ids.kivy_screen_manager.current)
+        
         if next_screen == "about_screen":
             self.ids.kivy_screen_manager.current = "about_screen"
 
+    def on_back_btn(self):
+        if self.screen_list:
+            self.ids.kivy_screen_manager.current = self.screen_list.pop()
+            return True
+        # No more screens to go back to. Quit app.
+        return False
+        
+    
     
 class OpenAoi(App):
     def __init__(self, **kwargs):
         super(OpenAoi, self).__init__(**kwargs)
+        Window.bind(on_keyboard=self.on_back_btn)
+        
+    def on_back_btn(self, window, key, *args):
+        # User presses back btn
+        if key == 27:
+            return self.root.on_back_btn()
         
     def build(self):
         self.core = Core()

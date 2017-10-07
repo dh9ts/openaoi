@@ -3,11 +3,29 @@ kivy.require('1.0.0')
 
 from kivy.app import App
 from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
 
-class MyApp(App):
+from core import Core
+
+
+class OpenAoiRoot(BoxLayout):
+    """
+    Root of all widgets.
+    """
+    def __init__(self, **kwargs):
+        super(OpenAoiRoot, self).__init__(**kwargs)
+
+    
+class OpenAoi(App):
+    def __init__(self, **kwargs):
+        super(OpenAoi, self).__init__(**kwargs)
+        
     def build(self):
-        return Button(text='Hello World')
+        self.core = Core()
+        
+        return OpenAoiRoot()
+
 
 if __name__ in ('__android__', '__main__'):
-    MyApp().run()
+    OpenAoi().run()
 

@@ -1,0 +1,3 @@
+# Eine Leiste mit Inhalten
+# - Erstmal nur Label
+# - Dann davon ableiten und weitere funktionen erweitern.

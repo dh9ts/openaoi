@@ -22,6 +22,7 @@ class OpenAoi(App):
         
     def build(self):
         self.core = Core()
+        self.core.load_options()
         
         return OpenAoiRoot()
 

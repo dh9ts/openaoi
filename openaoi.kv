@@ -1,3 +1,9 @@
+<WrappedLabel@Label>:
+    size_hint_y: None
+    height: self.texture_size[1] * 1.5
+    markup: True
+    
+
 <OpenAoiRoot>:
     orientation: "vertical"
     
@@ -10,11 +16,17 @@
                 ActionButton:
                     text: "Settings"
                     on_press: app.open_settings()
+                ActionButton:
+                    text: "About"
+                    on_release: app.root.change_screen("about_screen")
                     
     ScreenManager:
         id: kivy_screen_manager
         StartScreen:
             name: "start_screen"
+        AboutScreen:
+            id: about_screen
+            name: "about_screen"
 
 <StartScreen@Screen>:
     BoxLayout:
@@ -22,9 +34,9 @@
         padding: root.width * 0.02, root.height * .02
         spacing: min(root.width, root.height) * .02
         
-        Label:
-            text: "[b]StartScreen[/b]"
-            markup: True
+        WrappedLabel:
+            text: "[b]OpenAOI[/b]"
+            font_size: max(root.height, root.width) / 30
             
         Button:
             text: "Step 1"
@@ -32,5 +44,24 @@
             text: "Step 2"
         Button:
             text: "Step 3"
+        Button:
+            text: "Step 4"
+        Button:
+            text: "Step 5"
+            
+<AboutScreen@Screen>:
+    BoxLayout:
+        padding: root.width * 0.02, root.height * .02
+        Label:
+            text: app.getText()
+            halign: "center"
+            markup: True
+            font_size: min(root.height, root.width) / 20
+            text_size: self.width, None
+            center_y: .5
+            on_ref_press: app.on_ref_press(*args)
+            
+        
+        
             
         

@@ -5,6 +5,7 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 
+import webbrowser
 from core import Core
 
 
@@ -14,6 +15,10 @@ class OpenAoiRoot(BoxLayout):
     """
     def __init__(self, **kwargs):
         super(OpenAoiRoot, self).__init__(**kwargs)
+        
+    def change_screen(self, next_screen):
+        if next_screen == "about_screen":
+            self.ids.kivy_screen_manager.current = "about_screen"
 
     
 class OpenAoi(App):
@@ -41,6 +46,17 @@ class OpenAoi(App):
         self.core.setConfigValue("gui.window.position", pos)
         
         self.core.save_options()
+        
+    def getText(self):
+        return ("OpenAOI. This App was build using [b][ref=kivy]Kivy[/ref][/b]\n"
+               "The source is hosted on [b][ref=git]Github[/ref][/b].")
+        
+    def on_ref_press(self, instace, ref):
+        _dict = {
+                    "kivy": "http://kivy.org",
+                    "git": "https://github.com/dh9ts/openaoi"
+                }
+        webbrowser.open(_dict[ref])
 
 
 if __name__ in ('__android__', '__main__'):

@@ -12,7 +12,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.button import Button
-from kivy.properties import ListProperty, StringProperty
+from kivy.properties import ListProperty, StringProperty, DictProperty
 
 import webbrowser
 from core import Core
@@ -32,7 +32,16 @@ class PluginWidget(RelativeLayout):
         
 class LedWidget(Widget):
     color = ListProperty([0,0,1])
-        
+    colors = DictProperty()
+    status = StringProperty("")
+    
+    def on_status(self, instance, value):
+        if value in self.colors.keys():
+            self.color = self.colors[value]
+        else:
+            raise ValueError('Status not added to colors.')   
+
+
 class OpenAoiRoot(BoxLayout):
     """
     Root of all widgets.

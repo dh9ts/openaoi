@@ -1,14 +1,38 @@
 import kivy
 kivy.require('1.0.0')
 
+# Disable multitouch-emulation
+from kivy.config import Config
+Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
+
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.widget import Widget
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.button import Button
+from kivy.properties import ListProperty, StringProperty
 
 import webbrowser
 from core import Core
 
 
+class PluginWidget(RelativeLayout):
+    name = StringProperty("Plugin")
+    
+    #def __init__(self, **kwargs):
+    #    super(PluginWidget, self).__init__(**kwargs)
+    
+        #settings = Button(text="S", 
+        #                  pos=(20,20), 
+        #                  size_hint=(None, None),
+        #                  size=(30,30))
+        #self.add_widget(settings)
+        
+class LedWidget(Widget):
+    color = ListProperty([0,0,1])
+        
 class OpenAoiRoot(BoxLayout):
     """
     Root of all widgets.

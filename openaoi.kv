@@ -19,36 +19,103 @@
                 ActionButton:
                     text: "About"
                     on_release: app.root.change_screen("about_screen")
-                    
-    ScreenManager:
-        id: kivy_screen_manager
-        StartScreen:
-            name: "start_screen"
-        AboutScreen:
-            id: about_screen
-            name: "about_screen"
+        
+    BoxLayout:
+        orientation: "horizontal"
+            
+        ScreenManager:
+            id: kivy_screen_manager
+            StartScreen:
+                name: "start_screen"
+            AboutScreen:
+                id: about_screen
+                name: "about_screen"
+
+<PluginWidget>:
+    id: pw
+    
+    # Rahmen um das Widget
+    canvas:
+        Color:
+            rgb: 0.3, 0.3, 0.3
+        Line:
+            points: [(0, 5), (0, 65), (190, 65), (190, 5), (0, 5)]
+    
+    # Label für die Bezeichnung
+    Label:
+        text: pw.name
+        size_hint: None, None
+        size: 180, 50
+        center: 85, 35
+        
+    # Button for Settings
+    Button:
+        text: "S"
+        size_hint: (None, None)
+        size: (30, 20)
+        pos: (150, 40)
+        
+    # Button fot the Picture
+    Button:
+        text: "B"
+        size_hint: (None, None)
+        size: (30, 20)
+        pos: (150, 10)
+        
+    # Status LED
+    LedWidget:
+        pos: 10, 45
+        color: 0, 1, 0
+        
+    # Result LED
+    LedWidget:
+        pos: 10, 15
+        color: 1, 0, 0
+        
+<LedWidget>:
+    canvas:
+        Color:
+            rgb: self.color
+        Ellipse:
+            pos: self.pos
+            size: 10, 10
+           
+            
 
 <StartScreen@Screen>:
     BoxLayout:
-        orientation: "vertical"
-        padding: root.width * 0.02, root.height * .02
-        spacing: min(root.width, root.height) * .02
+        orientation: "horizontal"
         
-        WrappedLabel:
-            text: "[b]OpenAOI[/b]"
-            font_size: max(root.height, root.width) / 30
+        BoxLayout:
+            orientation: "vertical"
+            padding: root.width * 0.02, root.height * .02
+            spacing: min(root.width, root.height) * .02
+            size_hint_x: 0.3
             
-        Button:
-            text: "Step 1"
-        Button:
-            text: "Step 2"
-        Button:
-            text: "Step 3"
-        Button:
-            text: "Step 4"
-        Button:
-            text: "Step 5"
+            WrappedLabel:
+                text: "[b]OpenAOI[/b]"
+                font_size: max(root.height, root.width) / 30
+                
+            PluginWidget:
+                name: "Plugin 1"
+
+            PluginWidget:
+                name: "Plugin 2"
             
+            PluginWidget:
+                name: "Plugin 3"
+                
+            PluginWidget:
+                name: "Plugin 4"
+                
+            PluginWidget:
+                name: "Plugin 5"
+                
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_x: 0.7
+
+
 <AboutScreen@Screen>:
     BoxLayout:
         padding: root.width * 0.02, root.height * .02
